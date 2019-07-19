@@ -8,15 +8,19 @@ class CashRegister
     attr_accessor   :discount, :total
 
     def set_total
-        if @items.length>0
-            @total=@items.map{|hash| hash['price']*hash['quantity']}.flatten.reduce(0){|acc,num| acc+num}
+        if self.items.length>0
+            @total=@items.map{|hash| hash['price'] * hash['quantity']}.flatten.reduce(0){|acc,num| acc+num}
         else
             @total=0
         end
     end
 
     def items
-        @items.reduce([]){|acc,hash| hash['quantity'].times{acc<<hash['title']}; acc}.flatten
+        if @items.length>0
+            @items.reduce([]){|acc,hash| hash['quantity'].times{acc<<hash['title']}; acc}.flatten
+        else
+            []
+        end
     end
 
     def add_item(title, price, quantity=1)
